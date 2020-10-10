@@ -27,12 +27,6 @@ for i in range(start_index, max_index):
     style_reference_image_path = style_reference_image_paths[i]
     result_prefix = result_prefixes[i]
 
-    # base_image_path = keras.utils.get_file("paris.jpg", "https://i.imgur.com/F28w3Ac.jpg")
-    # style_reference_image_path = keras.utils.get_file(
-    #     "starry_night.jpg", "https://i.imgur.com/9ooB60I.jpg"
-    # )
-    # result_prefix = "paris_generated"
-
     # Weights of the different loss components
     total_variation_weight = 1e-6
     style_weight = 1e-6
@@ -128,7 +122,7 @@ for i in range(start_index, max_index):
 
     def compute_loss(combination_image, base_image, style_reference_image):
         input_tensor = tf.concat(
-            [base_image, style_reference_image, combination_image], axis=0
+            [base_image, style_reference_image, combination_image], 0
         )
         features = feature_extractor(input_tensor)
 
