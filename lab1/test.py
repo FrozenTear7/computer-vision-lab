@@ -3,28 +3,21 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras.applications import vgg19
 
-start_index = 0
-max_index = 5
-base_image_paths = [
-    "./hiragana/synthetic_8_frames_RGBA/01_a/01_a.000_Camera_0000.png",
-    "./hiragana/synthetic_8_frames_RGBA/02_i/02_i.000_Camera_0000.png",
-    "./hiragana/synthetic_8_frames_RGBA/03_u/03_u.000_Camera_0000.png",
-    "./hiragana/synthetic_8_frames_RGBA/04_e/04_e.000_Camera_0000.png",
-    "./hiragana/synthetic_8_frames_RGBA/05_o/05_o.000_Camera_0000.png",
-]
-style_reference_image_paths = [
-    "./hiragana/real_train/01_a/real_train_01_a_0.png",
-    "./hiragana/real_train/02_i/real_train_02_i_0.png",
-    "./hiragana/real_train/03_u/real_train_03_u_0.png",
-    "./hiragana/real_train/04_e/real_train_04_e_0.png",
-    "./hiragana/real_train/05_o/real_train_05_o_0.png",
-]
-result_prefixes = ["01_a", "02_i", "03_u", "04_e", "05_o"]
+base_image_path = keras.utils.get_file("paris.jpg", "https://i.imgur.com/F28w3Ac.jpg")
+style_reference_image_path = keras.utils.get_file(
+    "starry_night.jpg", "https://i.imgur.com/9ooB60I.jpg"
+)
+result_prefix = "paris_generated"
 
 # Weights of the different loss components
 total_variation_weight = 1e-6
 style_weight = 1e-6
 content_weight = 2.5e-8
+
+# Dimensions of the generated picture.
+width, height = keras.preprocessing.image.load_img(base_image_path).size
+img_nrows = 400
+img_ncols = int(width * img_nrows / height)
 
 
 def preprocess_image(image_path):
@@ -52,6 +45,8 @@ def deprocess_image(x):
 
 
 # The gram matrix of an image tensor (feature-wise outer product)
+
+
 def gram_matrix(x):
     x = tf.transpose(x, (2, 0, 1))
     features = tf.reshape(x, (tf.shape(x)[0], -1))
@@ -120,7 +115,9 @@ content_layer_name = "block5_conv2"
 
 
 def compute_loss(combination_image, base_image, style_reference_image):
-    input_tensor = tf.concat([base_image, style_reference_image, combination_image], 0)
+    input_tensor = tf.concat(
+        [base_image, style_reference_image, combination_image], axis=0
+    )
     features = feature_extractor(input_tensor)
 
     # Initialize the loss
@@ -160,32 +157,18 @@ optimizer = keras.optimizers.SGD(
     )
 )
 
-for i in range(start_index, max_index):
-    base_image_path = base_image_paths[i]
-    style_reference_image_path = style_reference_image_paths[i]
-    result_prefix = result_prefixes[i]
-    print(i)
-    print(base_image_path)
-    print(style_reference_image_path)
-    print(result_prefix)
+base_image = preprocess_image(base_image_path)
+style_reference_image = preprocess_image(style_reference_image_path)
+combination_image = tf.Variable(preprocess_image(base_image_path))
 
-    # Dimensions of the generated picture.
-    width, height = keras.preprocessing.image.load_img(base_image_path).size
-    img_nrows = 400
-    img_ncols = int(width * img_nrows / height)
-
-    base_image = preprocess_image(base_image_path)
-    style_reference_image = preprocess_image(style_reference_image_path)
-    combination_image = tf.Variable(preprocess_image(base_image_path))
-
-    iterations = 2000
-    for i in range(1, iterations + 1):
-        loss, grads = compute_loss_and_grads(
-            combination_image, base_image, style_reference_image
-        )
-        optimizer.apply_gradients([(grads, combination_image)])
-        if i % 100 == 0:
-            print("Iteration %d: loss=%.2f" % (i, loss))
-            img = deprocess_image(combination_image.numpy())
-            fname = result_prefix + "_at_iteration_%d.png" % i
-            keras.preprocessing.image.save_img(fname, img)
+iterations = 4000
+for i in range(1, iterations + 1):
+    loss, grads = compute_loss_and_grads(
+        combination_image, base_image, style_reference_image
+    )
+    optimizer.apply_gradients([(grads, combination_image)])
+    if i % 100 == 0:
+        print("Iteration %d: loss=%.2f" % (i, loss))
+        img = deprocess_image(combination_image.numpy())
+        fname = result_prefix + "_at_iteration_%d.png" % i
+        keras.preprocessing.image.save_img(fname, img)
