@@ -1,0 +1,4 @@
+black
+pylint
+ipykernel
+pillow   
