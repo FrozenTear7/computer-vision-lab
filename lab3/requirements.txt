@@ -1,0 +1,5 @@
+black
+pylint
+ipykernel
+matplotlib
+scikit-image
