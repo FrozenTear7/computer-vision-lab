@@ -1,6 +1,6 @@
 import sys
 import os
-from skimage.morphology import skeletonize,, thin
+from skimage.morphology import skeletonize, thin
 from skimage.transform import probabilistic_hough_line
 from skimage.util import invert
 from skimage import data, img_as_bool, io, color
