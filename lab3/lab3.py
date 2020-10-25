@@ -19,15 +19,15 @@ skel, distance = medial_axis(image, return_distance=True)
 skeleton = skeletonize(image)
 skeleton_lee = skeletonize(image, method="lee")
 
-threshold = 35
+threshold = 15
 line_length = 130
-line_gap = 80
+line_gap = 50
 
 angle = probabilistic_hough_line(
     skeleton, threshold=threshold, line_length=line_length, line_gap=line_gap
 )
 angle_lee = probabilistic_hough_line(
-    skeleton, threshold=threshold, line_length=line_length, line_gap=line_gap
+    skeleton_lee, threshold=threshold, line_length=line_length, line_gap=line_gap
 )
 
 dist_on_skel = distance * skel
