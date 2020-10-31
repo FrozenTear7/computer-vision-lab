@@ -13,7 +13,7 @@ myGene = trainGenerator(2, 'data/hiragana/train', 'image', 'label', data_gen_arg
 
 model = unet()
 model_checkpoint = ModelCheckpoint('unet_hiragana.hdf5', monitor = 'loss', verbose = 1, save_best_only = True)
-model.fit_generator(myGene, steps_per_epoch = 50, epochs = 3, callbacks = [model_checkpoint])
+model.fit_generator(myGene, steps_per_epoch = 100, epochs = 3, callbacks = [model_checkpoint])
 
 testGene = testGenerator("data/hiragana/test")
 results = model.predict_generator(testGene, 30, verbose=1)
