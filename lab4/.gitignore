@@ -1,0 +1,9 @@
+.vscode
+__pycache__
+data/
+hiragana/
+hiraganaPrepare/
+tmp/
+WK2020_L4_PMendroch
+WK2020_L4_PMendroch.zip
+unet_*.hdf5
