@@ -1,6 +1,0 @@
-# black
-# pylint
-ipykernel
-tensorflow
-scikit-image
-Keras>=1.0
