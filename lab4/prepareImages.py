@@ -3,6 +3,9 @@ import cv2
 import numpy as np
 import random
 
+test_amount = 30
+train_amount = 30
+
 in_dir = r'./hiraganaPrepare'
 out_dir = r'./data/hiragana/train/label'
 out_dir_renamed = r'./data/hiragana/train/image'
@@ -42,13 +45,13 @@ if __name__ == "__main__":
     i = 0
     for filename in os.listdir(in_dir):
         out_name = str(i) + ".png"
-        if i < 100:
+        if i < test_amount:
             in_file = os.path.join(in_dir, filename)
             out_file = os.path.join(test_dir, out_name)
             input_img = cv2.imread(in_file)
             image_filled = fillBackground(in_file)
             cv2.imwrite(out_file, image_filled)
-        else:
+        elif i >= test_amount and i < test_amount + train_amount:
             in_file = os.path.join(in_dir, filename)
             out_file = os.path.join(out_dir, out_name)
             out_file_renamed = os.path.join(out_dir_renamed, out_name)
@@ -59,5 +62,8 @@ if __name__ == "__main__":
             image_filled = fillBackground(in_file)
 
             cv2.imwrite(out_file_renamed, image_filled)
+        else:
+            break
+
         i += 1
     
