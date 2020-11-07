@@ -1,0 +1,7 @@
+black
+pylint
+ipykernel
+tensorflow==2.3.0
+matplotlib
+scikit-learn
+yellowbrick

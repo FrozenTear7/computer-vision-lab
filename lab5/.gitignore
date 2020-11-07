@@ -1,0 +1,7 @@
+.vscode
+__pycache__
+dataset/
+model/
+WK2020_L5_PMendroch
+WK2020_L5_PMendroch.zip
+venv
