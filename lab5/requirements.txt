@@ -5,3 +5,4 @@ tensorflow==2.3.0
 matplotlib
 scikit-learn
 yellowbrick
+opencv-python

@@ -1,0 +1,40 @@
+TensorFlow 2.0 Upgrade Script
+-----------------------------
+Converted 1 files
+Detected 1 issues that require attention
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+File: upgrade_me/object_pose_tf.py
+--------------------------------------------------------------------------------
+upgrade_me/object_pose_tf.py:410:4: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
+================================================================================
+Detailed log follows:
+
+================================================================================
+================================================================================
+Input tree: 'upgrade_me/'
+================================================================================
+--------------------------------------------------------------------------------
+Processing file 'upgrade_me/object_pose_tf.py'
+ outputting to 'upgraded_script/object_pose_tf.py'
+--------------------------------------------------------------------------------
+
+218:12: INFO: Renamed 'tf.layers.conv2d' to 'tf.compat.v1.layers.conv2d'
+226:12: INFO: Renamed 'tf.layers.max_pooling2d' to 'tf.compat.v1.layers.max_pooling2d'
+234:12: INFO: Renamed 'tf.layers.conv2d' to 'tf.compat.v1.layers.conv2d'
+242:12: INFO: Renamed 'tf.layers.max_pooling2d' to 'tf.compat.v1.layers.max_pooling2d'
+253:10: INFO: Renamed 'tf.layers.dense' to 'tf.compat.v1.layers.dense'
+261:10: INFO: Renamed 'tf.layers.dense' to 'tf.compat.v1.layers.dense'
+334:4: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+355:16: INFO: Added keywords to args of function 'tf.reduce_sum'
+355:56: INFO: Added keywords to args of function 'tf.reduce_sum'
+355:98: INFO: Added keywords to args of function 'tf.reduce_sum'
+356:13: INFO: Added keywords to args of function 'tf.reduce_sum'
+356:27: INFO: Added keywords to args of function 'tf.reduce_sum'
+361:12: INFO: Renamed 'tf.train.AdamOptimizer' to 'tf.compat.v1.train.AdamOptimizer'
+364:7: INFO: Renamed 'tf.global_variables_initializer' to 'tf.compat.v1.global_variables_initializer'
+366:5: INFO: Renamed 'tf.Session' to 'tf.compat.v1.Session'
+410:4: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
+410:4: INFO: Renamed 'tf.train.Saver' to 'tf.compat.v1.train.Saver'
+--------------------------------------------------------------------------------
+
