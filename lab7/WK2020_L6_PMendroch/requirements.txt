@@ -1,0 +1,7 @@
+black
+pylint
+ipykernel
+opencv-python
+numpy
+glob3
+plyfile
